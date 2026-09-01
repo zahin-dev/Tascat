@@ -1,0 +1,22 @@
+{
+  "name": "Tascat",
+  "short_name": "Tascat",
+  "description": "タスクを終えたら、猫とひと息。ローカルファーストのToDoアプリ。",
+  "lang": "ja",
+  "start_url": "/#/home",
+  "display": "browser",
+  "background_color": "#070d05",
+  "theme_color": "#151b0d",
+  "icons": [
+    {
+      "src": "/brand/tascat-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/tascat-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

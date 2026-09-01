@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" shape-rendering="crispEdges" role="img" aria-labelledby="title"><title id="title">Tascat pixel cat mark</title>
+  <rect width="64" height="64" fill="#151b0d"/>
+  <path fill="#5f6751" d="M2 2h60v4H6v52h52V6h4v56H2z"/>
+  <path fill="#ddd7ba" d="M6 6h52v4H10v44h44V10h4v48H6z"/>
+  <path fill="#070d05" d="M18 18h4V10h4v4h4v4h8v-4h4v-4h4v8h4v22h4v4h4v8h-4v4H42v-4H26v4H14v-4h-4v-8h4v-4h4z"/>
+  <path fill="#303e30" d="M22 22h24v18H22zm4 18h16v12H26zM46 36h8v4h-8zm8 4h4v8h-4zm-4 8h8v4h-8z"/>
+  <path fill="#ce8c5f" d="M26 28h4v4h-4zm8 0h4v4h-4z"/>
+  <path fill="#ddd7ba" d="M30 36h4v4h-4z"/>
+</svg>

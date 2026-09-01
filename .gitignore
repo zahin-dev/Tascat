@@ -1,0 +1,17 @@
+node_modules/
+dist/
+coverage/
+playwright-report/
+test-results/
+.asset-review/
+assets-source/
+.vercel/
+*.local
+*.log
+.env*
+*.tmp
+*.temp
+*.bak
+*.swp
+.DS_Store
+Thumbs.db
