@@ -6,6 +6,33 @@
 
 <p align="center">アカウント不要 · ローカルファースト · 個人利用向け</p>
 
+<p align="center"><a href="https://tascat.vercel.app/"><strong>Tascatを開く</strong></a></p>
+
+<p align="center">
+  <a href="#development">開発・公開状況</a> ·
+  <a href="#screenshots">プレビュー</a> ·
+  <a href="#features">主な機能</a> ·
+  <a href="#technology">技術スタック</a> ·
+  <a href="#quickstart">セットアップ</a> ·
+  <a href="#documentation">ドキュメント</a>
+</p>
+
+---
+
+<a id="development"></a>
+
+## 開発・公開状況
+
+| 項目 | 内容 |
+| --- | --- |
+| 開発開始 | 2025年9月 |
+| MVP完成 | 2025年11月 |
+| 現在の状況 | 開発停止 |
+| GitHub初回公開 | 2026年9月 |
+| 公開アプリ | [Tascatを開く](https://tascat.vercel.app/) |
+
+<a id="screenshots"></a>
+
 ## 🖼️ プレビュー
 
 | 猫広場を中心にしたホーム画面 | タスク追加モーダル |
@@ -34,6 +61,8 @@ flowchart LR
 
 同じタスクから獲得できるごはんは最大1食です。完了解除後に再び完了しても報酬は増えず、繰り返しタスクの次回分も重複生成されません。
 
+<a id="features"></a>
+
 ## ✨ 主な機能
 
 - ✅ タスクの追加・編集・削除・完了解除とサブタスク管理
@@ -48,6 +77,8 @@ flowchart LR
 - ♿ WCAG 2.2 Level AAを意識したキーボード操作とReflow
 
 検索、通知、同期、統計、ランキング、育成要素は実装していません。
+
+<a id="technology"></a>
 
 ## 🛠️ 技術スタック
 
@@ -101,6 +132,8 @@ flowchart TD
 - 1280×720の画面成立と320px幅の縦方向Reflow
 - Chromium主要フロー、Firefox / WebKit smoke、axe serious / critical 0を自動検証
 - TypeScript、ESLint、Unit、Integration、E2E、production buildを品質ゲート化
+
+<a id="quickstart"></a>
 
 ## 🚀 セットアップ
 
@@ -166,6 +199,8 @@ Tascat/
 └─ vite.config.ts
 ```
 
+<a id="documentation"></a>
+
 ## 📚 ドキュメント
 
 - [要件定義](docs/requirements.md)
@@ -192,10 +227,6 @@ Tascat/
 Conti Neue 2PはSIL Open Font License 1.1で配布され、ライセンス本文を [`licenses/ContiNeue2P-OFL.txt`](licenses/ContiNeue2P-OFL.txt) に保持しています。一部のPixel Assetは利用許諾を確認した第三者素材を加工したものです。公開リポジトリには実行に必要なruntime assetsだけを含め、元ZIP・元sheet・未使用素材は再配布条件に従い含めません。詳細は[アセット運用](docs/assets.md)を参照してください。
 
 プロジェクト全体に対するOSSライセンスは設定していません。
-
-## 🧭 プロジェクト状況と次の一歩
-
-ポートフォリオ向けの高品質プロトタイプとして、主要機能・アクセシビリティ・自動テスト・Vercel配信構成まで実装済みです。今後は少数のユーザーに実際に使ってもらい、コア体験を増やしすぎない範囲で使い勝手を改善していきます。
 
 ## ⚠️ 制約
 
