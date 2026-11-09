@@ -68,13 +68,13 @@ flowchart LR
 - ✅ タスクの追加・編集・削除・完了解除とサブタスク管理
 - ✅ 全サブタスク完了後のみ親タスクを完了できる制約
 - 🍚 1タスク1食を保証するごはん報酬
-- 🐈 AichanのStand Idle / Eatピクセルアニメーション
+- 🐈 Aichanの待機・食事のピクセルアニメーション
 - 🔁 毎日・毎週・毎月の繰り返しタスクと重複防止
 - 📅 月表示カレンダーと日付からのタスク追加
 - ⏱️ 25分集中・5分休憩の固定ポモドーロ
 - 💾 アカウント不要のlocalStorage保存
 - 🎨 深い森林と暖かな木を基調とした一貫したピクセルUI
-- ♿ WCAG 2.2 Level AAを意識したキーボード操作とReflow
+- ♿ WCAG 2.2のレベルAAを意識したキーボード操作と画面幅に応じた再配置
 
 検索、通知、同期、統計、ランキング、育成要素は実装していません。
 
@@ -87,10 +87,10 @@ flowchart LR
 | React 19.2 | 4画面、モーダル、猫アニメーションの宣言的UI |
 | TypeScript 6.0 | ドメインモデルと状態遷移の型安全性 |
 | Vite 8.2 | 開発サーバーと静的プロダクションビルド |
-| Tailwind CSS 4.3 + CSS Design Tokens | リセット基盤と独自ピクセルUIの設計 |
+| Tailwind CSS 4.3 + CSSのデザイントークン | リセット基盤と独自ピクセルUIの設計 |
 | React `useReducer` + Context | タスク・報酬・繰り返しの原子的な更新 |
 | localStorage | 現在のブラウザ内だけの永続化 |
-| Vitest + Testing Library | Unit / Integration Test |
+| Vitest + Testing Library | 単体・結合テスト |
 | Playwright + axe-core | E2E、ブラウザ互換、アクセシビリティ検査 |
 | Vercel | `dist` の静的配信 |
 
@@ -100,38 +100,38 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-  R[Hash Navigation] --> P[React Feature Pages]
-  P --> U[共有Pixel UI]
+  R[ハッシュによる画面遷移] --> P[Reactの機能別画面]
+  P --> U[共通のピクセルUI]
   P --> S[AppProvider / useReducer]
-  S --> D[Task・Reward・Recurrence Domain]
-  S --> L[localStorage Adapter]
-  L --> V[Schema Validation]
+  S --> D[タスク・報酬・繰り返しの処理]
+  S --> L[localStorageの読み書き]
+  L --> V[スキーマ検証]
 ```
 
-ドメイン処理はUIから分離した純粋関数を中心に構成しています。親タスク完了時の「完了更新・初回報酬・次回生成」は単一のreducer actionで処理し、中間状態や再描画による二重付与を防ぎます。
+ドメイン処理はUIから分離した純粋関数を中心に構成しています。親タスク完了時の「完了更新・初回報酬・次回生成」は単一のリデューサーのアクションで処理し、中間状態や再描画による二重付与を防ぎます。
 
-永続化には、利用者1人・端末内限定・少量データ・同期なしという要件に最も単純に合うlocalStorageを採用しました。保存snapshotはschema versionとruntime validationを持ち、破損データを安全に拒否します。
+永続化には、利用者1人・端末内限定・少量データ・同期なしという要件に最も単純に合うlocalStorageを採用しました。保存データにはスキーマの版を記録し、読み込み時に破損データを検出します。
 
 ## 🎨 設計・実装上の工夫
 
 - `rewardClaimed` を完了解除と独立させ、1タスク1食を保証
 - `generatedFromId` と生成済み状態により繰り返しタスクの二重作成を防止
 - 終了予定時刻を基準にポモドーロ残時間を再計算し、ページ移動や再読込によるずれを抑制
-- AichanはIdle / Eatだけを収めた最小runtime sheetを整数倍率で描画
-- HTMLが意味と操作を担い、加工済みPixel Assetは外観に限定
-- 第三者の元配布物を含めず、実行に必要な加工済みruntime assetsだけを公開
+- Aichanは待機・食事の画像を収めた小さなスプライトシートを整数倍率で描画
+- HTMLが意味と操作を担い、加工済みのピクセル素材は外観に限定
+- 第三者の元配布物を含めず、実行に必要な加工済み素材だけを公開
 
 ## ♿ アクセシビリティと品質保証
 
 - セマンティックなナビゲーション、見出し、フォーム、ボタン
-- 明確な `:focus-visible`、skip link、キーボード操作
-- ネイティブ `dialog` によるフォーカス拘束、Escape、フォーカス復帰
-- label・入力エラー・live regionの関連付け
+- 明確な `:focus-visible`、本文へのスキップリンク、キーボード操作
+- ネイティブ `dialog` によるフォーカス拘束、Escキーでの閉じ操作、フォーカスの復帰
+- ラベルと入力エラーの関連付け、画面読み上げへの通知
 - 色と文字・形を併用した完了、優先度、無効状態
 - `prefers-reduced-motion` でも食事状態の意味を維持
-- 1280×720の画面成立と320px幅の縦方向Reflow
-- Chromium主要フロー、Firefox / WebKit smoke、axe serious / critical 0を自動検証
-- TypeScript、ESLint、Unit、Integration、E2E、production buildを品質ゲート化
+- 1280×720での表示と、幅320pxでの縦方向への再配置
+- Chromiumの主要操作、FirefoxとWebKitの基本動作、axeで重大・致命的な問題が0件であることを自動検証
+- 型検査、ESLint、単体・結合・E2Eテスト、本番ビルドで品質を確認
 
 <a id="quickstart"></a>
 
@@ -159,11 +159,11 @@ npm run dev
 ```bash
 npm run typecheck       # TypeScript
 npm run lint            # ESLint
-npm test                # Unit + Integration
-npm run test:coverage   # Coverage report
-npm run test:e2e        # Chromium + Firefox / WebKit smoke + axe
+npm test                # 単体・結合テスト
+npm run test:coverage   # カバレッジの計測
+npm run test:e2e        # 各ブラウザの動作とアクセシビリティの確認
 npm run build           # distを生成
-npm run preview         # production buildを確認
+npm run preview         # 本番ビルドを確認
 ```
 
 ### アセット再生成
@@ -184,14 +184,14 @@ Tascat/
 ├─ e2e/                   # Playwright E2E
 ├─ licenses/              # Conti Neue 2PのOFL 1.1
 ├─ public/
-│  ├─ assets/             # Fontと加工済みruntime pixel assets
+│  ├─ assets/             # フォントと加工済みのピクセル素材
 │  └─ brand/              # Tascatロゴとサイトアイコン
-├─ scripts/               # ブランド生成と任意のPixel Asset再生成
+├─ scripts/               # ブランド生成と任意のピクセル素材の再生成
 ├─ src/
-│  ├─ app/                # Providerとhash navigation
-│  ├─ components/         # CatSpriteと共有UI
-│  ├─ domain/             # Task・日付・報酬・Pomodoroの純粋ロジック
-│  ├─ features/           # Home / Calendar / Pomodoro / Settings / Tasks / Cat
+│  ├─ app/                # 状態の提供とハッシュによる画面遷移
+│  ├─ components/         # 猫のスプライトと共通の画面部品
+│  ├─ domain/             # タスク・日付・報酬・ポモドーロの処理
+│  ├─ features/           # ホーム・カレンダー・ポモドーロ・設定・タスク・猫
 │  ├─ storage/            # localStorageの検証・読み書き
 │  └─ test/               # テスト初期化
 ├─ playwright.config.ts
@@ -220,11 +220,11 @@ Tascat/
 
 ## ☁️ デプロイ
 
-`vercel.json` にViteのbuild command、`dist` 出力、SPA fallback、静的セキュリティheaderを定義済みです。VercelへリポジトリをImportし、環境変数なしでデプロイできます。
+`vercel.json` にViteのビルドコマンド、`dist` 出力、SPAのフォールバック、セキュリティヘッダーを定義済みです。Vercelへリポジトリを取り込み、環境変数なしでデプロイできます。
 
 ## 📦 第三者素材とフォント
 
-Conti Neue 2PはSIL Open Font License 1.1で配布され、ライセンス本文を [`licenses/ContiNeue2P-OFL.txt`](licenses/ContiNeue2P-OFL.txt) に保持しています。一部のPixel Assetは利用許諾を確認した第三者素材を加工したものです。公開リポジトリには実行に必要なruntime assetsだけを含め、元ZIP・元sheet・未使用素材は再配布条件に従い含めません。詳細は[アセット運用](docs/assets.md)を参照してください。
+Conti Neue 2PはSIL Open Font License 1.1で配布され、ライセンス本文を [`licenses/ContiNeue2P-OFL.txt`](licenses/ContiNeue2P-OFL.txt) に保持しています。一部のピクセル素材は利用許諾を確認した第三者素材を加工したものです。公開リポジトリには実行に必要な素材だけを含め、元のZIPファイル・スプライトシート・未使用素材は再配布条件に従い含めません。詳細は[アセット運用](docs/assets.md)を参照してください。
 
 プロジェクト全体に対するOSSライセンスは設定していません。
 
@@ -232,10 +232,10 @@ Conti Neue 2PはSIL Open Font License 1.1で配布され、ライセンス本文
 
 - 端末間・ブラウザ間の同期はありません
 - バックアップ、インポート、エクスポートはありません
-- 複数タブで同時編集した場合は最後に保存されたsnapshotが優先されます
+- 複数タブで同時編集した場合は最後に保存された状態が優先されます
 - 通知、音、履歴、統計、検索、フィルターはありません
 
 ## 👤 作者
 
 **@zahin-dev**  
-University Student · Expected Graduation: 2028
+大学生 · 2028年卒業予定
